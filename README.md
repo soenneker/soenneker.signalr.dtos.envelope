@@ -3,7 +3,7 @@
 [![](https://img.shields.io/nuget/dt/soenneker.signalr.dtos.envelope.svg?style=for-the-badge)](https://www.nuget.org/packages/soenneker.signalr.dtos.envelope/)
 
 # ![](https://user-images.githubusercontent.com/4441470/224455560-91ed3ee7-f510-4041-a8d2-3fc093025112.png) Soenneker.SignalR.Dtos.Envelope
-### A generic DTO for SignalR generic message communication
+### A DTO for SignalR generic message communication
 
 ## Installation
 
