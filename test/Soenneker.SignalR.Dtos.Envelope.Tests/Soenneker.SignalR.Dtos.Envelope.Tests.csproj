@@ -15,7 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\Soenneker.SignalR.Dtos.Envelope.csproj" />
+        <ProjectReference Include="..\..\src\Soenneker.SignalR.Dtos.Envelope\Soenneker.SignalR.Dtos.Envelope.csproj" />
     </ItemGroup>
 
     <ItemGroup>
