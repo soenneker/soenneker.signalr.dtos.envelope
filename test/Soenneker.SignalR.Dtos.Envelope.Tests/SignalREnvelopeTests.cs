@@ -1,11 +1,10 @@
-﻿using Soenneker.Tests.Unit;
-using Xunit;
+using Soenneker.Tests.Unit;
 
 namespace Soenneker.SignalR.Dtos.Envelope.Tests;
 
 public sealed class SignalREnvelopeTests : UnitTest
 {
-    [Fact]
+    [Test]
     public void Default()
     {
 
