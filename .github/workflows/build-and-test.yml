@@ -38,7 +38,7 @@ jobs:
         run: dotnet build test/Soenneker.SignalR.Dtos.Envelope.Tests/Soenneker.SignalR.Dtos.Envelope.Tests.csproj --configuration Release --no-restore --verbosity minimal
 
       - name: Test
-        run: dotnet test test/Soenneker.SignalR.Dtos.Envelope.Tests/Soenneker.SignalR.Dtos.Envelope.Tests.csproj --configuration Release --no-build --no-restore --verbosity minimal
+        run: dotnet test --project test/Soenneker.SignalR.Dtos.Envelope.Tests/Soenneker.SignalR.Dtos.Envelope.Tests.csproj --configuration Release --no-build --no-restore --verbosity minimal
 
       - name: Pack
         run: dotnet pack src/Soenneker.SignalR.Dtos.Envelope/Soenneker.SignalR.Dtos.Envelope.csproj --configuration Release --no-build --no-restore --output . --verbosity minimal
