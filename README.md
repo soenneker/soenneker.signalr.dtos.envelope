@@ -5,21 +5,63 @@
 
 # Soenneker.SignalR.Dtos.Envelope
 
-Represents a standardized message envelope used in SignalR communication, containing a type identifier and a JSON-encoded payload.
+A two-field SignalR message envelope containing a type discriminator and an optional serialized payload string.
 
-## Install
+## Installation
 
 ```bash
 dotnet add package Soenneker.SignalR.Dtos.Envelope
 ```
 
-## What you get
+## Create an envelope
 
-- `SignalREnvelope` — Represents a standardized message envelope used in SignalR communication, containing a type identifier and a JSON-encoded payload.
+```csharp
+using System.Text.Json;
+using Soenneker.SignalR.Dtos.Envelope;
 
-## API at a glance
+var payload = new OrderUpdated
+{
+    OrderId = "order-123",
+    Status = "shipped"
+};
 
-| API | What it does | Result / important behavior |
-| --- | --- | --- |
-| `SignalREnvelope.Type` | Gets or sets the type of the message, used to identify the nature or intent of the payload. | Gets or sets the type of the message, used to identify the nature or intent of the payload. |
-| `SignalREnvelope.Payload` | Gets or sets the serialized payload of the message, typically a JSON string. This may be `null` for messages that carry no payload. | Gets or sets the serialized payload of the message, typically a JSON string. This may be `null` for messages that carry no payload. |
+var envelope = new SignalREnvelope
+{
+    Type = "order.updated.v1",
+    Payload = JsonSerializer.Serialize(payload)
+};
+
+await hubConnection.SendAsync(
+    "Message",
+    envelope,
+    cancellationToken);
+```
+
+`Payload` is a string, not a `JsonElement` or arbitrary object. When the envelope itself is serialized as JSON, a JSON payload is therefore nested as an escaped string:
+
+```json
+{
+  "type": "order.updated.v1",
+  "payload": "{\"orderId\":\"order-123\",\"status\":\"shipped\"}"
+}
+```
+
+Use `Payload = null` for a type-only message.
+
+## Consume an envelope
+
+Route on a stable type value, then deserialize the payload into the corresponding contract:
+
+```csharp
+switch (envelope.Type)
+{
+    case "order.updated.v1" when envelope.Payload is not null:
+        OrderUpdated? update =
+            JsonSerializer.Deserialize<OrderUpdated>(envelope.Payload);
+        break;
+}
+```
+
+Both System.Text.Json and Newtonsoft.Json annotations map the properties to `type` and `payload`. The DTO does not validate either field, enforce a type registry, serialize payload objects for you, or protect against unknown type values. Validate untrusted payload size and content before deserializing it.
+
+`SignalREnvelope` is a mutable record. Record equality compares the current `Type` and `Payload` strings; mutating either property changes equality and hash-code results, so do not mutate an instance while it is used as a dictionary key or set member.
