@@ -1,5 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-using Newtonsoft.Json;
 
 namespace Soenneker.SignalR.Dtos.Envelope;
 
@@ -13,7 +12,6 @@ public sealed record SignalREnvelope
     /// Gets or sets the type of the message, used to identify the nature or intent of the payload.
     /// </summary>
     [JsonPropertyName("type")]
-    [JsonProperty("type")]
     public string Type { get; set; } = null!;
 
     /// <summary>
@@ -21,6 +19,5 @@ public sealed record SignalREnvelope
     /// This may be <c>null</c> for messages that carry no payload.
     /// </summary>
     [JsonPropertyName("payload")]
-    [JsonProperty("payload")]
     public string? Payload { get; set; }
 }

@@ -62,6 +62,6 @@ switch (envelope.Type)
 }
 ```
 
-Both System.Text.Json and Newtonsoft.Json annotations map the properties to `type` and `payload`. The DTO does not validate either field, enforce a type registry, serialize payload objects for you, or protect against unknown type values. Validate untrusted payload size and content before deserializing it.
+System.Text.Json annotations map the properties to `type` and `payload`. The DTO does not validate either field, enforce a type registry, serialize payload objects for you, or protect against unknown type values. Validate untrusted payload size and content before deserializing it.
 
 `SignalREnvelope` is a mutable record. Record equality compares the current `Type` and `Payload` strings; mutating either property changes equality and hash-code results, so do not mutate an instance while it is used as a dictionary key or set member.
