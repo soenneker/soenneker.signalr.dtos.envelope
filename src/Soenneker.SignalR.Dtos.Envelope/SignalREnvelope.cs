@@ -20,4 +20,20 @@ public sealed record SignalREnvelope
     /// </summary>
     [JsonPropertyName("payload")]
     public string? Payload { get; set; }
+
+    /// <summary>Stable event identity for durable deduplication. Optional for legacy messages.</summary>
+    [JsonPropertyName("messageId"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? MessageId { get; set; }
+
+    /// <summary>Authorized replay stream identity. Sequence numbers are scoped to this stream.</summary>
+    [JsonPropertyName("streamId"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? StreamId { get; set; }
+
+    /// <summary>Contiguous, server-assigned sequence starting at one. Zero denotes an empty checkpoint.</summary>
+    [JsonPropertyName("sequence"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public long? Sequence { get; set; }
+
+    /// <summary>Positive payload schema version. Required by the opt-in replay protocol.</summary>
+    [JsonPropertyName("schemaVersion"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public int? SchemaVersion { get; set; }
 }
